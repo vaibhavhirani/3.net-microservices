@@ -20,15 +20,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
-
-    - task: TerraformCLI@1
+    - task: TerraformCLI@0
       inputs:
         command: 'init'
         backendType: 'azurerm'
@@ -41,7 +33,6 @@ stages:
         backendAzureRmContainerName: $(TFStateBackendAzStorageAccCont)
         backendAzureRmKey: $(TFStateBackendStorageAccContKey)
         allowTelemetryCollection: true
-    
     - task: TerraformCLI@0
       inputs:
         command: 'output'
@@ -52,4 +43,13 @@ stages:
             echo ' $(TF_OUT_AZURE_CONTAINER_REGISTRY_ADMIN_USERNAME)'
             echo ' $(TF_OUT_AZURE_CONTAINER_REGISTRY)'
       displayName: echo tf output vars
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          $(tag)
+
+    
 
