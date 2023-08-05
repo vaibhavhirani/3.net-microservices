@@ -9,7 +9,7 @@ RUN dotnet restore --use-current-runtime
 
 # copy everything else and build app
 COPY /app/aspnetapp/. .
-RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /app
+RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o /final
 
 
 # final stage/image
