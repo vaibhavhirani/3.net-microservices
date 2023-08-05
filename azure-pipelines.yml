@@ -30,5 +30,20 @@ stages:
         tags: |
           $(tag)
         
-    
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
+        appName: 'dockerdotnetapp3net'
+        imageName: 'dockerregistrydotnet.azurecr.io/dockerregistrydotnet:$(tag)'
+        deployToSlotOrASE: true
+        resourceGroupName: 'dockerdotnet'
+        slotName: staging
+
+    - task: AzureAppServiceManage@0
+      inputs:
+        azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
+        WebAppName: 'dockerdotnetapp3net'
+        ResourceGroupName: 'dockerdotnet'
+        SourceSlot: staging
+        SwapWithProduction: true
 
