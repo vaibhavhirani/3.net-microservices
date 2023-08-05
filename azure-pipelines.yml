@@ -4,11 +4,7 @@
 
 trigger:
 - main
-
-resources:
-- repo: self
-
-variables:
+'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)':
   tag: '$(Build.BuildId)'
 
 stages:
@@ -24,7 +20,7 @@ stages:
       inputs:
         command: 'init'
         backendType: 'azurerm'
-        backendServiceArm: 'Azure for Students $(ARM_SUBSCRIPTION_ID)'
+        backendServiceArm: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
         backendAzureRmSubscriptionId: $(ARM_SUBSCRIPTION_ID)
         ensureBackend: false
         backendAzureRmResourceGroupName: $(TFStateBackendAzResourceGroup)
