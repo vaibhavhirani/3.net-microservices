@@ -24,7 +24,7 @@ stages:
       inputs:
         command: 'init'
         backendType: 'azurerm'
-        backendServiceArm: 'Azure for Students($(ARM_SUBSCRIPTION_ID))'
+        backendServiceArm: 'Azure for Students $(ARM_SUBSCRIPTION_ID)'
         backendAzureRmSubscriptionId: $(ARM_SUBSCRIPTION_ID)
         ensureBackend: false
         backendAzureRmResourceGroupName: $(TFStateBackendAzResourceGroup)
