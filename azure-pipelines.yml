@@ -4,7 +4,11 @@
 
 trigger:
 - main
-'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)':
+
+resources:
+- repo: self
+
+variables:
   tag: '$(Build.BuildId)'
 
 stages:
