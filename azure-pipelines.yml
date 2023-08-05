@@ -20,36 +20,14 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: TerraformCLI@0
-      inputs:
-        command: 'init'
-        backendType: 'azurerm'
-        backendServiceArm: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
-        backendAzureRmSubscriptionId: $(ARM_SUBSCRIPTION_ID)
-        ensureBackend: false
-        backendAzureRmResourceGroupName: $(TFStateBackendAzResourceGroup)
-        backendAzureRmResourceGroupLocation: $(TFStateBackendAzRegion)
-        backendAzureRmStorageAccountName: $(TFStateBackendAzStorageAcc)
-        backendAzureRmContainerName: $(TFStateBackendAzStorageAccCont)
-        backendAzureRmKey: $(TFStateBackendStorageAccContKey)
-        allowTelemetryCollection: true
-    - task: TerraformCLI@0
-      inputs:
-        command: 'output'
-        allowTelemetryCollection: true
-
-    - bash: |
-            echo ' $(TF_OUT_AZURE_CONTAINER_REGISTRY_ADMIN_PASSWORD)'
-            echo ' $(TF_OUT_AZURE_CONTAINER_REGISTRY_ADMIN_USERNAME)'
-            echo ' $(TF_OUT_AZURE_CONTAINER_REGISTRY)'
-      displayName: echo tf output vars
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        containerRegistry: 'dockerregistrydotnet'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-
+        
     
 
