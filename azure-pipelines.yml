@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '3.net-microservices:$(Build.BuildId)'
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -24,7 +24,7 @@ stages:
       displayName: Build an image
       inputs:
         containerRegistry: 'dockerregistrydotnet'
-        repository: 'dotnetapps'
+        repository: '3.net-microservices'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
