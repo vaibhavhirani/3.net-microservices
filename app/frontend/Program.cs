@@ -1,10 +1,15 @@
+using System;
+using System.Net;
+using System.Web.Http;
+
 namespace HelloWorld
 {
-    class Program
+    public class HelloWorldController : ApiController
     {
-        static void Main(string[] args)
+        [HttpGet]
+        public string Get()
         {
-            Console.WriteLine("Hello, World!");
+            return "Hello, World!";
         }
     }
 }
