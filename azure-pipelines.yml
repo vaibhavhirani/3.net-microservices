@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  tag: '3.net-microservices:$(Build.BuildId)'
 
 stages:
 - stage: Build
