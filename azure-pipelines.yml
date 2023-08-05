@@ -28,13 +28,13 @@ stages:
         tags: |
           $(tag)
 
-    - task: TerraformCLI@0
+    - task: TerraformCLI@1
       inputs:
         command: 'init'
         backendType: 'azurerm'
         backendServiceArm: 'Azure for Students($(ARM_SUBSCRIPTION_ID))'
         backendAzureRmSubscriptionId: $(ARM_SUBSCRIPTION_ID)
-        ensureBackend: true
+        ensureBackend: false
         backendAzureRmResourceGroupName: $(TFStateBackendAzResourceGroup)
         backendAzureRmResourceGroupLocation: $(TFStateBackendAzRegion)
         backendAzureRmStorageAccountName: $(TFStateBackendAzStorageAcc)
