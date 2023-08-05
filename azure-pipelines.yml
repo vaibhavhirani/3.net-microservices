@@ -24,6 +24,7 @@ stages:
       displayName: Build an image
       inputs:
         containerRegistry: 'dockerregistrydotnet'
+        repository: 'dotnetapps'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
