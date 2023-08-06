@@ -27,6 +27,7 @@ stages:
         azureContainerRegistry: '{"loginServer":"dockerregistrydotnet.azurecr.io", "id" : "/subscriptions/d76415fd-d1f3-4359-8d5e-6121b38f3ad8/resourceGroups/dockerdotnet/providers/Microsoft.ContainerRegistry/registries/dockerregistrydotnet"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services' 
+    
     - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
@@ -44,11 +45,10 @@ stages:
         slotName: 'staging'
         multicontainerConfigFile: '**/docker-compose.yml'
 
-    # - task: AzureAppServiceManage@0
-    #   inputs:
-    #     azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
-    #     WebAppName: 'dockerdotnetapp3net'
-    #     ResourceGroupName: 'dockerdotnet'
-    #     SourceSlot: staging
-    #     SwapWithProduction: true
-
+    - task: AzureAppServiceManage@0
+      inputs:
+        azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
+        WebAppName: 'dockerdotnetapp3net'
+        ResourceGroupName: 'dockerdotnet'
+        SourceSlot: staging
+        SwapWithProduction: true
