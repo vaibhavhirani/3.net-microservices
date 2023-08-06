@@ -23,7 +23,7 @@ stages:
     - task: Docker@2
       displayName: "Build & Push Custom Nginx Image"
       inputs:
-        containerRegistry: 'dotnetregistry'
+        containerRegistry: 'dockerdotnet'
         repository: 'nginx'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile_Nginx'
