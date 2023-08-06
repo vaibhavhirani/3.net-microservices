@@ -20,16 +20,30 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Docker@2
-      displayName: Build an image
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     containerRegistry: 'dockerregistrydotnet'
+    #     repository: '3.net-microservices'
+    #     command: 'buildAndPush'
+    #     Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    #     tags: |
+    #       $(tag)
+    - task: DockerCompose@0
       inputs:
-        containerRegistry: 'dockerregistrydotnet'
-        repository: '3.net-microservices'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
-        
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
+        azureContainerRegistry: '{"loginServer":"dockerregistrydotnet.azurecr.io", "id" : "/subscriptions/d76415fd-d1f3-4359-8d5e-6121b38f3ad8/resourceGroups/dockerdotnet/providers/Microsoft.ContainerRegistry/registries/dockerregistrydotnet"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Build services' 
+    - task: DockerCompose@0
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
+        azureContainerRegistry: '{"loginServer":"dockerregistrydotnet.azurecr.io", "id" : "/subscriptions/d76415fd-d1f3-4359-8d5e-6121b38f3ad8/resourceGroups/dockerdotnet/providers/Microsoft.ContainerRegistry/registries/dockerregistrydotnet"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Push services'
+
     - task: AzureWebAppContainer@1
       inputs:
         azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
