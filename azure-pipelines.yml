@@ -48,8 +48,8 @@ stages:
       inputs:
         azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
         appName: 'dockerdotnetapp3net'
-        # multicontainerConfigFile: "./docker-compose.yml"
-        imageName: 'dockerregistrydotnet.azurecr.io/vaibhavhirani3netmicroservices_dotnetapp:latest'
+        multicontainerConfigFile: "./docker-compose.yml"
+        # imageName: 'dockerregistrydotnet.azurecr.io/vaibhavhirani3netmicroservices_dotnetapp:latest'
         deployToSlotOrASE: true
         resourceGroupName: 'dockerdotnet'
         slotName: staging
