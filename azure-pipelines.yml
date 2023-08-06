@@ -20,6 +20,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    # Builds the custom nginx image and pushes to private acr repo
     - task: Docker@2
       displayName: "Build & Push Custom Nginx Image"
       inputs:
@@ -29,6 +30,7 @@ stages:
         Dockerfile: '**/Dockerfile_Nginx'
         tags: 'latest'
 
+    # Builds the docker compose file
     - task: DockerCompose@0
       displayName: "Builds docker compose file"
       inputs:
@@ -38,6 +40,7 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services' 
     
+    # Pushes the image created from the docker compose file
     - task: DockerCompose@0
       displayName: "Pushes docker compose based image"
       inputs:
@@ -47,6 +50,7 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
 
+    # Deployment of the above created image to Staging Slot
     - task: AzureWebAppContainer@1
       displayName: "Deployment to Staging Slot"
       inputs:
@@ -56,7 +60,10 @@ stages:
         resourceGroupName: 'dockerdotnet'
         slotName: 'staging'
         multicontainerConfigFile: '**/docker-compose.yml'
+    
+    # Needs a task here, which can check the health of application deployed in Staging Slot and proceed accordingly to production deployment
 
+    # Deployment of the above created image to Production Slot
     - task: AzureAppServiceManage@0
       displayName: "Swapping to Production Slot"
       inputs:

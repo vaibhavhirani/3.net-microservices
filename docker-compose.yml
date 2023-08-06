@@ -1,11 +1,17 @@
+# Compose file to bundle vaibhavhirani3netmicroservices_dotnetapp as .dotnet app, nginx as web/app server and mysql for database
 version: "3.9"
 services:
+  # Main dotnet application.
   dotnetapp:
     build: .
-    image: dockerregistrydotnet.azurecr.io/vaibhavhirani3netmicroservices_dotnetapp:latest
+    image: dockerregistrydotnet.azurecr.io:443/vaibhavhirani3netmicroservices_dotnetapp:latest
     networks:
       - dotnet
+  # Custom NGINX image which has mapping for dotnet application in conf file.
   nginx-app-server:
+    build:
+      context: .
+      dockerfile: Dockerfile_Nginx
     image: dockerregistrydotnet.azurecr.io/nginx:latest
     ports:
       - "80:80"
@@ -13,6 +19,7 @@ services:
       - dotnet
     depends_on:
       - dotnetapp
+  # mysql db
   mysql:
     image: mysql
     restart: always
@@ -25,6 +32,8 @@ services:
       - "3306:3306"
     networks:
       - dotnet
+
+# Ensures that all the container are on same network. Altough to need to include but nevermind.
 networks:
   dotnet:
     driver: bridge

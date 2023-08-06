@@ -1,6 +1,5 @@
 
-# Learn about building .NET container images:
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+# First stage 'build' to set workdir, setting port.
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
 EXPOSE 5000
@@ -14,7 +13,7 @@ COPY /app/aspnetapp/. .
 RUN dotnet publish  --use-current-runtime --self-contained false --no-restore -o /final
 
 
-# final stage/image
+# Final stage to push only the artifact or executables in the docker image. Keeps the size of the image lesser.
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /final
 EXPOSE 5000
