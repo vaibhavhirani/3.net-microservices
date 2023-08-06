@@ -6,13 +6,11 @@ services:
     networks:
       - dotnet
   nginx-app-server:
-    image: nginx
+    image: dockerregistrydotnet.azurecr.io/nginx:latest
     ports:
       - "80:80"
     networks:
       - dotnet
-    volumes:
-      -  ${WEBAPP_STORAGE_HOME}/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - dotnetapp
   mysql:
