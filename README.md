@@ -30,6 +30,8 @@ Simple ASPNet Webapplication returns system information of client.
 
 ***Note : Please make sure your provision the infrstructure using the https://github.com/vaibhavhirani/3.net-microservices-iac before running this pipeline in Azure DevOps.***
 
+***Note : Make Sure You have Docker Registry Service Connection with the ACR registry created in IaC pipeline***
+
 ## Azure-Pipeline.yml
 ### Brief
     - Used by Azure DevOps Pipelines for creating CI/CD pipeline.
