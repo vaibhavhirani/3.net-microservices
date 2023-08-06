@@ -20,7 +20,17 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    - task: Docker@2
+      displayName: "Build & Push Custom Nginx Image"
+      inputs:
+        containerRegistry: 'dotnetregistry'
+        repository: 'nginx'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile_Nginx'
+        tags: 'latest'
+
     - task: DockerCompose@0
+      displayName: "Builds docker compose file"
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
@@ -29,6 +39,7 @@ stages:
         action: 'Build services' 
     
     - task: DockerCompose@0
+      displayName: "Pushes docker compose based image"
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
@@ -37,6 +48,7 @@ stages:
         action: 'Push services'
 
     - task: AzureWebAppContainer@1
+      displayName: "Deployment to Staging Slot"
       inputs:
         azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
         appName: 'dockerdotnetapp3net'
@@ -46,6 +58,7 @@ stages:
         multicontainerConfigFile: '**/docker-compose.yml'
 
     - task: AzureAppServiceManage@0
+      displayName: "Swapping to Production Slot"
       inputs:
         azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
         WebAppName: 'dockerdotnetapp3net'
