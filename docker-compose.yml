@@ -10,7 +10,7 @@ services:
     ports:
       - "80:80"
     networks:
-      - dotnetapp
+      - dotnet
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
