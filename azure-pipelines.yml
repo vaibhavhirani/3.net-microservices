@@ -42,8 +42,8 @@ stages:
         deployToSlotOrASE: true
         resourceGroupName: 'dockerdotnet'
         slotName: 'staging'
-        multicontainerConfigFile: './docker-config.yml'
-        
+        multicontainerConfigFile: '**/docker-compose.yml'
+
     # - task: AzureAppServiceManage@0
     #   inputs:
     #     azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
