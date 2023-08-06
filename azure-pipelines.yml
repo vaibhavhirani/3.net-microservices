@@ -20,15 +20,6 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    # - task: Docker@2
-    #   displayName: Build an image
-    #   inputs:
-    #     containerRegistry: 'dockerregistrydotnet'
-    #     repository: '3.net-microservices'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-    #     tags: |
-    #       $(tag)
     - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
@@ -48,17 +39,16 @@ stages:
       inputs:
         azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
         appName: 'dockerdotnetapp3net'
-        multicontainerConfigFile: "./docker-compose.yml"
-        # imageName: 'dockerregistrydotnet.azurecr.io/vaibhavhirani3netmicroservices_dotnetapp:latest'
         deployToSlotOrASE: true
         resourceGroupName: 'dockerdotnet'
-        slotName: staging
-
-    - task: AzureAppServiceManage@0
-      inputs:
-        azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
-        WebAppName: 'dockerdotnetapp3net'
-        ResourceGroupName: 'dockerdotnet'
-        SourceSlot: staging
-        SwapWithProduction: true
+        slotName: 'staging'
+        multicontainerConfigFile: './docker-config.yml'
+        
+    # - task: AzureAppServiceManage@0
+    #   inputs:
+    #     azureSubscription: 'Azure for Students(d76415fd-d1f3-4359-8d5e-6121b38f3ad8)'
+    #     WebAppName: 'dockerdotnetapp3net'
+    #     ResourceGroupName: 'dockerdotnet'
+    #     SourceSlot: staging
+    #     SwapWithProduction: true
 
